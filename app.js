@@ -1,32 +1,28 @@
 const http = require('http');
+const path = require('path')
 const fs = require('fs')
+const express = require('express')
+const app = express();
 
 const hostname = '127.0.0.1';
 const port = 3000;
 
-const server = http.createServer((req, res) => {
-  console.log("loading: %s", req.url);
-  if (req.url == "/") {
-    fs.readFile('index.html', function(err, html) {
-      if (err) {
-        throw err;
-      }
-      res.writeHead(200, { 'Content-Type': 'text / html' });
-      res.write(html);
-      res.end();
-    });
-  } else if (req.url == "/styles/body.css") {
-    fs.readFile('styles/body.css', function(err, body) {
-      if (err) {
-        throw err;
-      }
-      res.writeHead(200, { 'Content-Type': 'text / css' });
-      res.write(body);
-      res.end();
-    });
-  }
-});
+const indexRouter = require('./scripts/index')
 
-server.listen(port, hostname, () => {
+// set up views path and view engine
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+// serve all files in static dir
+app.use(express.static(path.join(__dirname, 'static/images')));
+app.use(express.static(path.join(__dirname, 'static/css')));
+
+// route index.js to ROOT url
+app.use('/', indexRouter);
+
+// start localhost
+app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
+
+module.exports = app;
