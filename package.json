@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "name": "angelopavone.com",
+  "version": "1.0.0",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AngeloPavone/angelopavone.com.git"
+  },
+  "author": "angelo pavone",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AngeloPavone/angelopavone.com/issues"
+  },
+  "homepage": "https://github.com/AngeloPavone/angelopavone.com#readme",
+  "description": ""
+}
