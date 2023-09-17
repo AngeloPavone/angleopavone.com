@@ -1,26 +1,29 @@
 const express = require('express');
 const router = express.Router();
-const { BlogPost } = require('./mongo');
+const { BlogPost, BlogPostModel } = require('../scripts/blogPost');
 const fs = require('fs');
 
-const blogPost = new BlogPost();
+// Create an instance of BlogPost
+const blogPost = new BlogPost(
+  'Foo',
+  ['connection1', 'connection2'],
+  'This is the content of my blog post.',
+  'John Doe',
+  new Date('2023-09-17') // You can provide a custom date if needed
+);
 
-var blogPostTitle = blogPost.title;
+blogPostTitle = blogPost.title;
 
 // server homepage
-router.get('/', (req,res) => {
+router.get('/', (req, res) => {
   const data = { title: 'Home Page', content: 'This is the home page' };
-  res
-    // .set('Content-Type', 'plain/html')
-    .render('index', data)
+  res.render('index', data)
 });
 
 // server blog pages
-router.get(`/blog/${blogPostTitle}`, (req,res) => {
-  const data = { title: blogPostTitle, content: 'This is the blog page' };
-  res
-    // .set('Content-Type', 'plain/html')
-    .render('blog-post', data)
+router.get(`/${blogPost.title}`, (req, res) => {
+  const data = { title: blogPost.title, content: blogPost.content };
+  res.render('blog-post', data)
 });
 
 
