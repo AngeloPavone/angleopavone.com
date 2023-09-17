@@ -19,9 +19,8 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'static')));
 app.use(express.static(path.join(__dirname, 'static/css')));
 
-// route index.js to ROOT url
+// serve different routes
 app.use('/', routes);
-app.use('/blog/', routes);
 
 // start localhost
 app.listen(port, hostname, err  => {
