@@ -1,10 +1,6 @@
-const http = require('http');
 const path = require('path')
-const fs = require('fs')
 const express = require('express')
 const app = express();
-const session = require('express-session');
-const mongo = require('mongoose')
 
 const hostname = '127.0.0.1';
 const port = 3000;
@@ -17,14 +13,15 @@ app.set('view engine', 'ejs');
 
 // serve all files in static dir
 app.use(express.static(path.join(__dirname, 'static')));
+app.use(express.static(path.join(__dirname, 'fonts')));
 app.use(express.static(path.join(__dirname, 'static/css')));
 
 // serve different routes
-app.use('/', routes);
+app.use( routes);
 
 // start localhost
 app.listen(port, hostname, err  => {
-  if(err) throw err
+  if(err) throw err;
   console.log(`Server running at http://${hostname}:${port}/`);
 });
 

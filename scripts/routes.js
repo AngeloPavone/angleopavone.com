@@ -9,7 +9,7 @@ const blogPost = new BlogPost(
   ['connection1', 'connection2'],
   'This is the content of my blog post.',
   'John Doe',
-  new Date('2023-09-17') // You can provide a custom date if needed
+  new Date(),
 );
 
 blogPostTitle = blogPost.title;
@@ -25,6 +25,5 @@ router.get(`/${blogPost.title}`, (req, res) => {
   const data = { title: blogPost.title, content: blogPost.content };
   res.render('blog-post', data)
 });
-
 
 module.exports = router;
