@@ -26,4 +26,10 @@ router.get(`/${blogPost.title}`, (req, res) => {
   res.render('blog-post', data)
 });
 
+router.get(`/new-post`, (req, res) => {
+  console.log(process.env.blogUsername)
+  console.log(process.env.blogPassword)
+  res.render('new-post')
+});
+
 module.exports = router;

@@ -1,0 +1,35 @@
+:root {
+  --darkmode-bg-color: #202020FF;
+  --darkmode-font-color: #FFFFFFEE;
+  --lightmode-bg-color: #FFFFFFFF;
+  --lightmode-font-color: #000000FF;
+  --darkmode-textarea-color: #404040FF;
+
+  color: var(--darkmode-font-color);
+  background-color: var(--darkmode-bg-color);
+}
+
+body {
+  font-family: roboto regular, sans-serif;
+}
+
+@font-face {
+  font-family: 'roboto light';
+  src: local('Roboto-Light.ttf');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'roboto regular';
+  src: local('Roboto-Regular.ttf');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'roboto bold';
+  src: local('Roboto-Bold.ttf');
+  font-weight: 700;
+  font-style: normal;
+}

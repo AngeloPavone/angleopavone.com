@@ -1,0 +1,29 @@
+/* TODO(apy): look into performance impact of using @import for styles as opposed to Webpack or ES6 modules to manage your CSS and JavaScript dependencies more efficiently. */
+@import url('index.css');
+
+:root {
+  color: var(--darkmode-font-color);
+  background-color: var(--darkmode-bg-color);
+}
+
+#new-post {
+  font-family: roboto regular, sans-serif;
+  resize: none;
+  border: none;
+  overflow: auto;
+  outline: none;
+
+  -webkit-box-shadow: none;
+  box-shadow: none;
+
+  vertical-align: middle;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+  padding: 12px;
+  border-radius: 15px;
+
+  color: var(--darkmode-font-color);
+  background-color: var(--darkmode-textarea-color);
+}
