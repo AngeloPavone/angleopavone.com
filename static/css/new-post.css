@@ -1,7 +1,10 @@
-/* TODO(apy): look into performance impact of using @import for styles as opposed to Webpack or ES6 modules to manage your CSS and JavaScript dependencies more efficiently. */
-@import url('index.css');
-
 :root {
+  --darkmode-bg-color: #202020FF;
+  --darkmode-font-color: #FFFFFFEE;
+  --lightmode-bg-color: #FFFFFFFF;
+  --lightmode-font-color: #000000FF;
+  --darkmode-textarea-color: #404040FF;
+
   color: var(--darkmode-font-color);
   background-color: var(--darkmode-bg-color);
 }

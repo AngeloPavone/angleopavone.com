@@ -16,19 +16,15 @@ blogPostTitle = blogPost.title;
 
 // server homepage
 router.get('/', (req, res) => {
-  const data = { title: 'Home Page', content: 'This is the home page' };
-  res.render('index', data)
+  res.render('index')
 });
 
 // server blog pages
 router.get(`/${blogPost.title}`, (req, res) => {
-  const data = { title: blogPost.title, content: blogPost.content };
-  res.render('blog-post', data)
+  res.render('blog-post')
 });
 
 router.get(`/new-post`, (req, res) => {
-  console.log(process.env.blogUsername)
-  console.log(process.env.blogPassword)
   res.render('new-post')
 });
 
