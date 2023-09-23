@@ -1,4 +1,4 @@
-const mongo = require('mongoose')
+const mongoose = require('mongoose')
 
 class BlogPost {
   constructor(title, connections, content, author, date) {
@@ -12,12 +12,23 @@ class BlogPost {
 
 module.exports = BlogPost;
 
-const blogPostSchema = new mongo.Schema({
-  title: String,
-  content: String,
-  date: Date,
+const blogPostSchema = new mongoose.Schema({
+    title: { type: String, required: true },
+    connections: { type: Array, required: true },
+    content: { type: String, required: true },
+    author: { type: String, required: true }, 
+    date: { type: Date, default: Date.now },
 });
 
-const BlogPostModel = mongo.model('BlogPost', blogPostSchema);
+const testBlogPost = new BlogPostModel({
+  title: "test title",
+  connections: ["connection1", "connection2"],
+  content: "test content",
+  author: "Angelo Pavone",
+})
+
+testBlogPost.save()
+
+const BlogPostModel = mongoose.model('BlogPost', blogPostSchema);
 
 module.exports = { BlogPostModel, BlogPost};
