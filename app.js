@@ -1,40 +1,24 @@
-const path = require('path')
-const express = require('express')
-const { MongoClient } = require('mongodb');
+const path = require('path');
+const mongoDB = require('./database-setup');
+const express = require('express');
 const app = express();
 
 const hostname = '127.0.0.1';
 const port = 3000;
 
-const mongoURI = 'mongodb://localhost:27017/blogPosts';
-
-const routes = require('./scripts/routes');
-
-async function connectToMongoDB() {
-  const client = new MongoClient(mongoURI);
-  try {
-    await client.connect();
-    console.log('Connected to MongoDB');
-  } catch (error) {
-    console.error('Error connecting to MongoDB:', error);
-  } finally {
-    await client.close();
-  }
-}
-
-connectToMongoDB();
-
-// set up views path and view engine
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
-// serve all files in static dir
-app.use(express.static(path.join(__dirname, 'static')));
-app.use(express.static(path.join(__dirname, 'fonts')));
-app.use(express.static(path.join(__dirname, 'static/css')));
+// connect to mongodb
+mongoDB.connectToMongoDB();
 
 // serve different routes
+const routes = require('./routes');
 app.use(routes);
+
+// serve files
+app.use(express.static('public'))
+
+// set up views path and view engine
+app.set('views', path.join(__dirname, 'public'));
+app.set('view engine', 'ejs');
 
 // start localhost
 app.listen(port, hostname, err => {
