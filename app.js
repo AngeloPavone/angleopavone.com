@@ -23,7 +23,7 @@ app.set('view engine', 'ejs');
 // start localhost
 app.listen(port, hostname, err => {
   if (err) throw err;
-  console.log(`Server running at http://${hostname}:${port}/`);
+  console.log(`Server Running at http://${hostname}:${port}/`);
 });
 
 module.exports = app;
