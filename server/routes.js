@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { BlogPost, BlogPostModel } = require('./blog-post.js');
-const bodyParser = require('body-parser');
 const { connectToMongoDB, getTitle, findPost } = require('./database.js');
 const mongoose = require('mongoose');
 
@@ -23,7 +22,7 @@ router.get('/login', (req, res) => {
   res.render('../views/login.ejs');
 });
 
-router.post('/new-post', bodyParser.urlencoded({ extended: true }), (req, res) => {
+router.post('/new-post', (req, res) => {
   if (req.body.username === process.env.USERNAME && req.body.password === process.env.PASSWORD) {
     res.render('../views/new-post.ejs');
   } else {
@@ -42,7 +41,7 @@ router.get('/data', async (req, res) => {
   }
 });
 
-router.post('/submitNewPost', bodyParser.json(), async (req, res) => {
+router.post('/submitNewPost', async (req, res) => {
   try {
     const newPost = new BlogPostModel({
       title: req.body.title,
