@@ -2,16 +2,16 @@ const path = require('path');
 const mongoDB = require('./server/database.js');
 const express = require('express');
 const app = express();
+require('dotenv').config();
 
 const HOSTNAME = process.env.HOSTNAME || '127.0.0.1';
 const PORT = process.env.PORT || 3000;
 
 // connect to mongodb
-mongoDB.connectToMongoDB();
+mongoDB.connectToMongoDb();
 
 // serve different routes
-const routes = require('./server/routes');
-app.use(routes);
+app.use(require('./server/routes.js'));
 
 // serve files
 app.use(express.static('public'));

@@ -11,13 +11,13 @@ class BlogPost {
 }
 
 const blogPostSchema = new mongoose.Schema({
-  title: { type: String, required: true },
+  title: { type: String, required: true, unique: true },
   connections: { type: Array, required: true },
   content: { type: String, required: true },
   author: { type: String, required: true },
   date: { type: Date, default: Date.now },
 });
 
-const BlogPostModel = mongoose.model('test', blogPostSchema);
+const BlogPostModel = mongoose.model('blogPosts', blogPostSchema);
 
 module.exports = { BlogPostModel, BlogPost };
