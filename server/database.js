@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { MongoClient } = require('mongodb');
-const mongoURI = 'mongodb://localhost:27017/test';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/test';
 
 async function listDatabases(client) {
 	const databasesList = await client.db().admin().listDatabases();
@@ -12,7 +12,7 @@ async function listDatabases(client) {
 async function connectToMongoDB() {
 	try {
 		mongoose.set('strictQuery', false);
-		const connect = await mongoose.connect(mongoURI);
+		const connect = await mongoose.connect(MONGODB_URI);
 		console.log(`Database Connected: ${connect.connection.host}`)
 	} catch (error) {
 		console.log(error);

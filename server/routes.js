@@ -1,25 +1,21 @@
 const express = require('express');
-const app = express();
 const router = express.Router();
-const { BlogPost, BlogPostModel } = require('./public/blog-post.js');
-const fs = require('fs');
-const path = require('path');
+const { BlogPost, BlogPostModel } = require('./blog-post.js');
 const bodyParser = require('body-parser');
-const mongo = require('./database-setup.js');
 
 
 // server homepage
 router.get('/', (req, res) => {
-  res.render('index.ejs');
+  res.render('../views/index.ejs');
 });
 
 // server blog pages
 router.get(`/${BlogPostModel.title}`, (req, res) => {
-  res.render('blog-post.ejs');
+  res.render('../views/blog-post.ejs');
 });
 
 router.get('/new-post', (req, res) => {
-  res.render('new-post.ejs');
+  res.render('../views/new-post.ejs');
 });
 
 router.post('/submitNewPost', bodyParser.json(), async (req, res) => {
