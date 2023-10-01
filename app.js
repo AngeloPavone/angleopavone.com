@@ -29,7 +29,7 @@ app.use(require('./server/routes.js'));
 // start localhost
 app.listen(PORT, HOSTNAME, err => {
   if (err) throw err;
-  console.log(`Server Running at http://${HOSTNAME}:${PORT}/`);
+  console.log(`Server Connected http://${HOSTNAME}:${PORT}/`);
 });
 
 module.exports = app;
