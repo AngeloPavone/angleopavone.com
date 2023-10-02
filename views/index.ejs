@@ -5,16 +5,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title> angelopavone </title>
-
   <link rel="stylesheet" type="text/css" href="./css/index.css">
+  <!-- TODO(angelo): figure out why this is not fixing the fouc error in firefox -->
+  <!-- <script src="./js/fouc.js"></script> -->
 </head>
 
 <body>
-
   <h1>Blog Posts</h1>
-
   <div>
     <ul id="postList">
       <% posts.forEach(function(post) { %>
@@ -27,7 +25,5 @@
   <a href="/posts/test" id="lemonSVG">
     <object data="./img/lemon.svg" type="image/svg+xml"></object>
   </a>
-
 </body>
-
 </html>
