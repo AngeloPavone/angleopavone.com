@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { BlogPost, BlogPostModel } = require('./blog-post.js');
+const { BlogPost, BlogPostModel } = require('./blogPost.js');
 const { connectToMongoDB, getTitle, findPost } = require('./database.js');
 const mongoose = require('mongoose');
 
