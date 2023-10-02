@@ -14,6 +14,9 @@
 <body>
   <h1>Blog Posts</h1>
   <div>
+    <script src="./js/node.js"></script>
+  </div>
+  <div>
     <ul id="postList">
       <% posts.forEach(function(post) { %>
           <li> 
@@ -22,8 +25,5 @@
       <% }); %>
     </ul>
   </div>
-  <a href="/posts/test" id="lemonSVG">
-    <object data="./img/lemon.svg" type="image/svg+xml"></object>
-  </a>
 </body>
 </html>
