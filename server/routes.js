@@ -22,9 +22,9 @@ router.get('/login', (req, res) => {
   res.render('../views/login.ejs');
 });
 
-router.post('/new-post', (req, res) => {
+router.post('/newPost', (req, res) => {
   if (req.body.username === process.env.USERNAME && req.body.password === process.env.PASSWORD) {
-    res.render('../views/new-post.ejs');
+    res.render('../views/newPost.ejs');
   } else {
     res.status(401).send('Authentication failed');
   }
@@ -70,7 +70,7 @@ router.get('/posts/:title', async (req, res) => {
       var postContent = result.content
     }
       if (postContent) {
-        res.render('../views/blog-post.ejs', { postContent })
+        res.render('../views/blogPost.ejs', { postContent })
       } else {
         res.status(404).send(`Post content not found! Found ${postContent} instead`)
       }
