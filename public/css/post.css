@@ -1,0 +1,10 @@
+:root {
+  --darkmode-bg-color: #202020FF;
+  --darkmode-font-color: #FFFFFFEE;
+  --lightmode-bg-color: #FFFFFFFF;
+  --lightmode-font-color: #000000FF;
+  --darkmode-textarea-color: #404040FF;
+
+  color: var(--darkmode-font-color);
+  background-color: var(--darkmode-bg-color);
+}
