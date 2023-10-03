@@ -9,29 +9,40 @@ svg.setAttribute("height", VIEWPORT_HEIGHT);
 document.body.appendChild(svg);
 
 class Node {
-  constructor( x = VIEWPORT_WIDTH / 2, y = VIEWPORT_HEIGHT / 2, radius = 15, color = "lightblue") {
-    // Create a circle element
+  constructor(
+    blogTitle,
+    x = VIEWPORT_WIDTH / 2,
+    y = VIEWPORT_HEIGHT / 2,
+    radius = 20, color = "lightblue",
+  ) {
+
+    const Node = {
+      isDragging:  false
+    }
+
+    const anchor = document.createElementNS("http://www.w3.org/2000/svg", "a");
+    anchor.setAttribute("href", "/posts/fuck");
+
     const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     circle.setAttribute("cx", x.toString());
     circle.setAttribute("cy", y.toString());
     circle.setAttribute("r", radius.toString());
     circle.setAttribute("fill", color);
+    circle.setAttribute("id", blogTitle);
 
-    // Append the circle to the SVG element
-    svg.appendChild(circle);
+    svg.appendChild(anchor);
+    anchor.appendChild(circle)
 
-    // JavaScript for making the circle draggable
-    let isDragging = false;
     let offsetX, offsetY;
 
     circle.addEventListener("mousedown", (e) => {
-      isDragging = true;
+      Node.isDragging = true;
       offsetX = e.clientX - parseFloat(circle.getAttribute("cx"));
       offsetY = e.clientY - parseFloat(circle.getAttribute("cy"));
     });
 
     document.addEventListener("mousemove", (e) => {
-      if (isDragging) {
+      if (Node.isDragging) {
         const newX = e.clientX - offsetX;
         const newY = e.clientY - offsetY;
         circle.setAttribute("cx", newX.toString());
@@ -40,14 +51,14 @@ class Node {
     });
 
     document.addEventListener("mouseup", () => {
-      isDragging = false;
+      Node.isDragging = false;
     });
+
   }
 }
 
 const node0 = new Node();
-const node1 = new Node();
-const node2 = new Node();
-const node3 = new Node();
-const node4 = new Node();
-const node5 = new Node();
+
+const node = new Node();
+
+console.log(Node.isDragging);
