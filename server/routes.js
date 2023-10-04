@@ -69,11 +69,11 @@ router.get('/posts/:title', async (req, res) => {
     if (result) {
       var postContent = result.content
     }
-      if (postContent) {
-        res.render('../views/blogPost.ejs', { postContent })
-      } else {
-        res.status(404).send(`Post content not found! Found ${postContent} instead`)
-      }
+    if (postContent) {
+      res.render('../views/blogPost.ejs', { postContent })
+    } else {
+      res.status(404).send(`Post content not found! Found ${postContent} instead`)
+    }
   });
 });
 
