@@ -1,24 +1,17 @@
 const VIEWPORT_WIDTH = 800;
 const VIEWPORT_HEIGHT = 800;
 const RADIUS = 30;
-const COLOR = "#883388FF"
+const COLOR = "#FFFFFFFF"
 
-// const canvas = document.getElementById("nodeCanvas");
-// const canvasContext = canvas.getContext("2d");
+function createSVG(VIEWPORT_WIDTH, VIEWPORT_HEIGHT) {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("width", VIEWPORT_WIDTH);
+  svg.setAttribute("height", VIEWPORT_HEIGHT);
 
-// function loadSVGtoCanvas(img) {
-//   var img = new Image();
-//   img.onload = function() {
-//     canvasContext.drawImage(img, 0, 0);
-//   }
-// }
+  return svg;
+}
 
-
-const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-svg.setAttribute("width", VIEWPORT_WIDTH);
-svg.setAttribute("height", VIEWPORT_HEIGHT);
-
-document.body.appendChild(svg);
+const svg = document.body.appendChild(createSVG(VIEWPORT_WIDTH, VIEWPORT_HEIGHT));
 
 export class Node {
   constructor(
@@ -41,9 +34,7 @@ export class Node {
     circle.setAttribute("style", "pointer-events: auto")
 
     svg.appendChild(anchor);
-    anchor.appendChild(circle)
-
-    // loadSVGtoCanvas(svg);
+    anchor.appendChild(circle);
 
     let offsetX, offsetY;
 
