@@ -1,17 +1,74 @@
-const VIEWPORT_WIDTH = 800;
-const VIEWPORT_HEIGHT = 800;
+const nodeSVG = document.getElementById("nodeSVG");
+const VIEWPORT_WIDTH = nodeSVG.getAttribute("width");
+const VIEWPORT_HEIGHT = nodeSVG.getAttribute("height");
 const RADIUS = 30;
 const COLOR = "#FFFFFFFF"
 
-function createSVG(VIEWPORT_WIDTH, VIEWPORT_HEIGHT) {
-  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg.setAttribute("width", VIEWPORT_WIDTH);
-  svg.setAttribute("height", VIEWPORT_HEIGHT);
+const graphContainer = document.getElementById("graphContainer");
+graphContainer.getAttribute("width");
+graphContainer.getAttribute("height");
 
-  return svg;
+let isDragging = false;
+let initialMouseX, initialMouseY;
+let initialGraphX, initialGraphY;
+
+graphContainer.addEventListener("mousedown", (event) => {
+  const target = event.target.tagName;
+  if (target === "circle") return;
+  isDragging = true;
+  initialMouseX = event.clientX;
+  initialMouseY = event.clientY;
+  initialGraphX = graphContainer.scrollLeft;
+  initialGraphY = graphContainer.scrollTop;
+});
+
+window.addEventListener("mousemove", (event) => {
+  if (!isDragging) return;
+
+  const deltaX = event.clientX - initialMouseX;
+  const deltaY = event.clientY - initialMouseY;
+
+  graphContainer.scrollLeft = initialGraphX - deltaX;
+  graphContainer.scrollTop = initialGraphY - deltaY;
+});
+
+window.addEventListener("mouseup", () => {
+  isDragging = false;
+});
+
+class dragHandler {
+  constructor(element) {
+    this.element = element;
+    this.isDragging = false;
+    this.offsetX = 0;
+    this.offsetY = 0;
+
+    element.addEventListener("mousedown", (e) => this.startDrag(e));
+    document.addEventListener("mousemove", (e) => this.onDrag(e));
+    document.addEventListener("mouseup", () => this.endDrag());
+  }
+
+  startDrag(e) {
+    this.isDragging = true;
+    this.offsetX = e.clientX - parseFloat(this.element.getAttribute("cx"));
+    this.offsetY = e.clientY - parseFloat(this.element.getAttribute("cy"));
+  }
+
+  onDrag(e) {
+    if (this.isDragging) {
+      const newX = e.clientX - this.offsetX;
+      const newY = e.clientY - this.offsetY;
+      this.element.setAttribute("cx", newX.toString());
+      this.element.setAttribute("cy", newY.toString());
+      this.element.setAttribute("style", "pointer-events: none");
+    }
+  }
+
+  endDrag() {
+    this.isDragging = false;
+    this.element.setAttribute("style", "pointer-events: auto")
+  }
 }
-
-const svg = document.body.appendChild(createSVG(VIEWPORT_WIDTH, VIEWPORT_HEIGHT));
 
 export class Node {
   constructor(
@@ -19,7 +76,6 @@ export class Node {
     x = VIEWPORT_WIDTH / 2,
     y = VIEWPORT_HEIGHT / 2,
     radius = RADIUS, color = COLOR,
-    isDragging = false,
   ) {
 
     const anchor = document.createElementNS("http://www.w3.org/2000/svg", "a");
@@ -31,32 +87,16 @@ export class Node {
     circle.setAttribute("r", radius.toString());
     circle.setAttribute("fill", color);
     circle.setAttribute("id", blogTitle);
-    circle.setAttribute("style", "pointer-events: auto")
 
-    svg.appendChild(anchor);
+    nodeSVG.appendChild(anchor);
     anchor.appendChild(circle);
 
-    let offsetX, offsetY;
+    new dragHandler(circle);
 
-    circle.addEventListener("mousedown", (e) => {
-      isDragging = true;
-      offsetX = e.clientX - parseFloat(circle.getAttribute("cx"));
-      offsetY = e.clientY - parseFloat(circle.getAttribute("cy"));
-    });
+    this.circle = circle;
+  }
 
-    document.addEventListener("mousemove", (e) => {
-      if (isDragging) {
-        const newX = e.clientX - offsetX;
-        const newY = e.clientY - offsetY;
-        circle.setAttribute("cx", newX.toString());
-        circle.setAttribute("cy", newY.toString());
-        circle.setAttribute("style", "pointer-events: none")
-      }
-    });
-
-    document.addEventListener("mouseup", (e) => {
-      isDragging = false;
-      circle.setAttribute("style", "pointer-events: auto")
-    });
+  getCircle() {
+    return this.circle;
   }
 }

@@ -12,9 +12,21 @@
 </head>
 
 <body>
-
-
+  <!-- width and height of graphContainer must be the same as in css -->
+  <div id="graphContainer">
+    <svg id="nodeSVG" height="3200" width="3200"></svg>
+  </div>
   <script type="module" src="./js/node.js"></script>
   <script type="module" src="./js/index.js"></script>
+  <script type="module" src="./js/graph.js"></script>
+
+  <script>
+    // Set the initial scroll position
+    window.onload = function() {
+        var scrollableDiv = document.getElementById("graphContainer");
+        scrollableDiv.scrollTop = 1200;
+        scrollableDiv.scrollLeft = 1200;
+    };
+  </script>
 </body>
 </html>
