@@ -13,12 +13,10 @@
   width: 800px;
   height: 800px;
   overflow: auto;
-  border: 1px solid #FFFFFFFF;
+  border: 2px solid #FFFFFFFF;
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-top: -50px;
-  margin-left: -50px;
   transform: translate(-50%, -50%);
 }
 

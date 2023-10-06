@@ -6,16 +6,7 @@ const mongoose = require('mongoose');
 
 // server homepage
 router.get('/', async (req, res) => {
-  try {
-    const collection = mongoose.connection.db.collection('blogposts');
-    const result = await collection.find({}).toArray();
-
-    res.render('../views/index.ejs', { posts: result });
-  } catch (error) {
-    console.error('Error querying the database:', error);
-    res.status(500).json({ error: 'Database error' });
-  }
-
+    res.render('../views/index.ejs');
 });
 
 router.get('/login', (req, res) => {
@@ -27,17 +18,6 @@ router.post('/newPost', (req, res) => {
     res.render('../views/newPost.ejs');
   } else {
     res.status(401).send('Authentication failed');
-  }
-});
-
-router.get('/data', async (req, res) => {
-  try {
-    const collection = mongoose.connection.db.collection('blogposts');
-    const result = await collection.find({}).toArray();
-    res.json(result);
-  } catch (error) {
-    console.error('Error querying the database:', error);
-    res.status(500).json({ error: 'Database error' });
   }
 });
 
@@ -76,5 +56,17 @@ router.get('/posts/:title', async (req, res) => {
     }
   });
 });
+
+router.get('/api/blogposts', async (req, res) => {
+    try {
+    const collection = mongoose.connection.db.collection('blogposts');
+    const result = await collection.find({}).toArray();
+
+    res.json(result);
+  } catch (error) {
+    console.error('Error querying the database:', error);
+    res.status(500).json({ error: 'Database error' });
+  }
+})
 
 module.exports = router;
