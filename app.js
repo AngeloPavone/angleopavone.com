@@ -19,6 +19,7 @@ app.use(cookieParser());
 // serve files
 app.use(express.static('public'));
 app.use(express.static('public/img'));
+app.use(express.static('public/css'));
 
 // set up views path and view engine
 app.set('views', path.join(__dirname, 'public'));

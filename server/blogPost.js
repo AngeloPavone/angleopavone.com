@@ -1,7 +1,7 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 class BlogPost {
-  constructor(title, connections, content, author, date) {
+  constructor(title, connections, content, author, date, Node) {
     this.title = title;
     this.connections = connections;
     this.content = content;
