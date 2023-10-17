@@ -1,18 +1,20 @@
-const RADIUS = 60;
-const nodes = [];
+import { createNodesFromDataBase } from "./createNodesFromDataBase";
 
-function randomNumber(min, max) {
+const RADIUS = 60;
+export const nodes = [];
+
+export function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 };
 
-let graphContainer = document.getElementById("graphContainer");
+const graphContainer = document.getElementById("graphContainer");
+const canvas = document.getElementById("nodeCanvas");
 
-window.onload = function() {
-  graphContainer.scrollTop = 1200;
-  graphContainer.scrollLeft = 1200;
+window.onload = function () {
+  graphContainer.scrollTop = (canvas.clientHeight / 2) - graphContainer.clientHeight / 2;
+  graphContainer.scrollLeft = (canvas.clientWidth / 2) - graphContainer.clientWidth / 2;
 };
 
-const canvas = document.getElementById("nodeCanvas");
 const ctx = canvas.getContext("2d");
 
 export class Node {
@@ -21,6 +23,8 @@ export class Node {
     this.circle = {
       x: x,
       y: y,
+      offsetX: 0,
+      offsetY: 0,
       radius: radius,
       isDragging: false,
     };
@@ -36,7 +40,7 @@ export class Node {
     clickableCircle.className = "node-circle";
     clickableCircle.style.position = "absolute";
     clickableCircle.style.width = `${this.circle.radius}px`;
-    clickableCircle.style.height = `${this.circle.radius}px`;
+  clickableCircle.style.height = `${this.circle.radius}px`;
     clickableCircle.style.borderRadius = "50%";
     clickableCircle.style.backgroundColor = "white";
     clickableCircle.style.border = "2px solid black";
@@ -48,61 +52,39 @@ export class Node {
     anchor.appendChild(clickableCircle);
     graphContainer.appendChild(anchor);
 
-    let isDragging = false;
-
-    clickableCircle.addEventListener('mousedown', (event) => {
-      isDragging = true;
+  clickableCircle.addEventListener('mousedown', (event) => {
+      const nodeRect = clickableCircle.getBoundingClientRect();
+      this.circle.offsetX = event.clientX - nodeRect.left;
+      this.circle.offsetY = event.clientY - nodeRect.top;
+      this.circle.isDragging = true;
     });
 
-    document.addEventListener('mousemove', (event) => {
-      if (isDragging) {
-        // Calculate new element position based on mouse position and offset
-        const newLeft  = ((event.clientX + graphContainer.scrollLeft) - this.circle.radius) - 50;
-        const newTop   = ((event.clientY + graphContainer.scrollTop) - this.circle.radius) - 100;
+    clickableCircle.addEventListener('mousemove', (event) => {
+      if (this.circle.isDragging === false) return;
 
-        requestAnimationFrame(() => {
-          // Set the new element position
-          clickableCircle.style.left = newLeft + 'px';
-          clickableCircle.style.top = newTop + 'px';
+      const newLeft = ((event.clientX + graphContainer.scrollLeft) - this.circle.radius) + this.circle.offsetX;
+      const newTop = ((event.clientY + graphContainer.scrollTop) - this.circle.radius) + this.circle.offsetY;
 
-          // Update the circle's position
-          this.circle.x = newLeft;
-          this.circle.y = newTop;
+      requestAnimationFrame(() => {
+        clickableCircle.style.left = newLeft + 'px';
+        clickableCircle.style.top = newTop + 'px';
 
-          clickableCircle.style.left = this.circle.x + "px";
-          clickableCircle.style.top = this.circle.y + "px";
+        this.circle.x = newLeft;
+        this.circle.y = newTop;
 
-        });
+      });
 
-      }
-      console.log("mouse x:%spx y:%spx | node x:%s y:%s", event.clientX, event.clientY, clickableCircle.style.left, clickableCircle.style.top);
+      clickableCircle.addEventListener('mouseup', () => {
+        this.circle.isDragging = false;
+      });
+
     });
   }
 }
 
-
-function createNodesFromDataBase() {
-  fetch('/api/blogposts')
-    .then((res) => res.json())
-    .then((data) => {
-      data.forEach((post) => {
-        console.log("Creating a new node:", post.title);
-        const newNode = new Node(post.title, randomNumber(1200, 2000), randomNumber(1200, 2000));
-        nodes.push(newNode);
-        console.log(nodes);
-      });
-    })
-    .then(() => {
-      drawLine(nodes[0], nodes[1]);
-    })
-    .catch((error) => {
-      console.error('Error creating nodes from database:', error);
-    });
-}
-
 createNodesFromDataBase();
 
-function drawLine(node1, node2) {
+export function drawLine(node1, node2) {
   ctx.beginPath();
   ctx.moveTo(node1.circle.x, node1.circle.y);
   ctx.lineTo(node2.circle.x, node2.circle.y);
