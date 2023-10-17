@@ -1,10 +1,14 @@
 const nodeSVG = document.getElementById("nodeSVG");
-const VIEWPORT_WIDTH = nodeSVG.getAttribute("width");
-const VIEWPORT_HEIGHT = nodeSVG.getAttribute("height");
+const graphContainer = document.getElementById("graphContainer");
+const VIEWPORT_MIN = nodeSVG.clientWidth / 2 - graphContainer.clientWidth / 2;
+const VIEWPORT_MAX = nodeSVG.clientWidth / 2 + graphContainer.clientWidth / 2;
 const RADIUS = 30;
 const COLOR = "#FFFFFFFF"
 
-const graphContainer = document.getElementById("graphContainer");
+export function randomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min) + min);
+};
+
 graphContainer.getAttribute("width");
 graphContainer.getAttribute("height");
 
@@ -70,8 +74,9 @@ class nodeDragHandler {
   }
 }
 
+
 export class Node {
-  constructor(blogTitle, x = VIEWPORT_WIDTH / 2, y = VIEWPORT_HEIGHT / 2, radius = RADIUS, color = COLOR) {
+  constructor(blogTitle, x = randomNumber(VIEWPORT_MIN, VIEWPORT_MAX), y = randomNumber(VIEWPORT_MIN, VIEWPORT_MAX), radius = RADIUS, color = COLOR) {
 
     const anchor = document.createElementNS("http://www.w3.org/2000/svg", "a");
     anchor.setAttribute("href", `/posts/${blogTitle}`);
