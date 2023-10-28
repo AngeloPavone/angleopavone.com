@@ -5,7 +5,9 @@ const VIEWPORT_MAX = nodeSVG.clientWidth / 2 + graphContainer.clientWidth / 2;
 const RADIUS = 30;
 const COLOR = "#FFFFFFFF"
 
-export function randomNumber(min, max) {
+export const nodes = [];
+
+function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 };
 
@@ -65,6 +67,7 @@ class nodeDragHandler {
       this.element.setAttribute("cx", newX.toString());
       this.element.setAttribute("cy", newY.toString());
       this.element.setAttribute("style", "pointer-events: none");
+      drawLine(nodes[0], nodes[1]);
     }
   }
 
@@ -73,7 +76,6 @@ class nodeDragHandler {
     this.element.setAttribute("style", "pointer-events: auto")
   }
 }
-
 
 export class Node {
   constructor(blogTitle, x = randomNumber(VIEWPORT_MIN, VIEWPORT_MAX), y = randomNumber(VIEWPORT_MIN, VIEWPORT_MAX), radius = RADIUS, color = COLOR) {
@@ -100,3 +102,36 @@ export class Node {
     return this.circle;
   }
 }
+
+export function drawLine(source, destination) {
+  const sourceCircle = source.circle;
+  const destinationCircle = destination.circle;
+
+  const lineId = `line_${source.circle.id}_${destination.circle.id}`;
+
+  const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+
+  const x1 = parseFloat(sourceCircle.getAttribute("cx"));
+  const y1 = parseFloat(sourceCircle.getAttribute("cy"));
+  const x2 = parseFloat(destinationCircle.getAttribute("cx"));
+  const y2 = parseFloat(destinationCircle.getAttribute("cy"));
+
+  line.setAttribute("id", lineId);
+  line.setAttribute("x1", x1.toString());
+  line.setAttribute("y1", y1.toString());
+  line.setAttribute("x2", x2.toString());
+  line.setAttribute("y2", y2.toString());
+  line.setAttribute("stroke", "blue");
+  line.setAttribute("stroke-width", "2");
+  nodeSVG.appendChild(line);
+
+}
+
+export function clearLine() {
+  if (line) {
+    nodeSVG.removeChild(line);
+    line = null;
+  }
+}
+
+console.log("nodes: %o", nodes);
