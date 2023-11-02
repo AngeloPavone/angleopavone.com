@@ -1,4 +1,4 @@
-const nodeSVG = document.getElementById("nodeSVG");
+export const nodeSVG = document.getElementById("nodeSVG");
 const graphContainer = document.getElementById("graphContainer");
 const VIEWPORT_MIN = nodeSVG.clientWidth / 2 - graphContainer.clientWidth / 2;
 const VIEWPORT_MAX = nodeSVG.clientWidth / 2 + graphContainer.clientWidth / 2;
@@ -67,6 +67,7 @@ class nodeDragHandler {
       this.element.setAttribute("cx", newX.toString());
       this.element.setAttribute("cy", newY.toString());
       this.element.setAttribute("style", "pointer-events: none");
+
       drawLine(nodes[0], nodes[1]);
     }
   }
@@ -109,28 +110,38 @@ export function drawLine(source, destination) {
 
   const lineId = `line_${source.circle.id}_${destination.circle.id}`;
 
-  const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  const existingLine = document.getElementById(lineId)
 
-  const x1 = parseFloat(sourceCircle.getAttribute("cx"));
-  const y1 = parseFloat(sourceCircle.getAttribute("cy"));
-  const x2 = parseFloat(destinationCircle.getAttribute("cx"));
-  const y2 = parseFloat(destinationCircle.getAttribute("cy"));
+  if (existingLine) {
+    const x1 = parseFloat(sourceCircle.getAttribute("cx"));
+    const y1 = parseFloat(sourceCircle.getAttribute("cy"));
+    const x2 = parseFloat(destinationCircle.getAttribute("cx"));
+    const y2 = parseFloat(destinationCircle.getAttribute("cy"));
 
-  line.setAttribute("id", lineId);
-  line.setAttribute("x1", x1.toString());
-  line.setAttribute("y1", y1.toString());
-  line.setAttribute("x2", x2.toString());
-  line.setAttribute("y2", y2.toString());
-  line.setAttribute("stroke", "blue");
-  line.setAttribute("stroke-width", "2");
-  nodeSVG.appendChild(line);
+    existingLine.setAttribute("id", lineId);
+    existingLine.setAttribute("x1", x1.toString());
+    existingLine.setAttribute("y1", y1.toString());
+    existingLine.setAttribute("x2", x2.toString());
+    existingLine.setAttribute("y2", y2.toString());
+    existingLine.setAttribute("stroke", "blue");
+    existingLine.setAttribute("stroke-width", "2");
+  } else {
+    const x1 = parseFloat(sourceCircle.getAttribute("cx"));
+    const y1 = parseFloat(sourceCircle.getAttribute("cy"));
+    const x2 = parseFloat(destinationCircle.getAttribute("cx"));
+    const y2 = parseFloat(destinationCircle.getAttribute("cy"));
 
-}
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
 
-export function clearLine() {
-  if (line) {
-    nodeSVG.removeChild(line);
-    line = null;
+    line.setAttribute("id", lineId);
+    line.setAttribute("x1", x1.toString());
+    line.setAttribute("y1", y1.toString());
+    line.setAttribute("x2", x2.toString());
+    line.setAttribute("y2", y2.toString());
+    line.setAttribute("stroke", "blue");
+    line.setAttribute("stroke-width", "2");
+
+    nodeSVG.appendChild(line)
   }
 }
 

@@ -1,4 +1,4 @@
-import { Node, drawLine, nodes, clearLine } from './graph.js';
+import { drawLine, Node, nodes, nodeSVG } from './graph.js';
 
 export function addNode(blogTitle) {
   const node = new Node(blogTitle);
@@ -18,9 +18,10 @@ fetch('/api/blogposts')
     return Promise.all(nodePromises);
   })
   .then(() => {
-    drawLine(nodes[0], nodes[1]);
 
-    nodes.forEach(node => {
+  drawLine(nodes[0], nodes[1])
+
+   nodes.forEach(node => {
       nodeSVG.appendChild(node.getCircle());
     });
   })
