@@ -19,9 +19,9 @@ fetch('/api/blogposts')
   })
   .then(() => {
 
-  drawLine(nodes[0], nodes[1])
+    drawLine(nodes[0], nodes[1])
 
-   nodes.forEach(node => {
+    nodes.forEach(node => {
       nodeSVG.appendChild(node.getCircle());
     });
   })

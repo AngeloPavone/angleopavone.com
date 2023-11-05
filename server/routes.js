@@ -22,10 +22,11 @@ router.post('/newPost', (req, res) => {
 });
 
 router.post('/submitNewPost', async (req, res) => {
+
   try {
     const newPost = new BlogPostModel({
       title: req.body.title,
-      connections: [],
+      connections: [req.body.connections],
       content: req.body.content,
       author: "Angelo Pavone",
     });

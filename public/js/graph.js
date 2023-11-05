@@ -91,8 +91,8 @@ export class Node {
     circle.setAttribute("fill", color);
     circle.setAttribute("id", blogTitle);
 
-    nodeSVG.appendChild(anchor);
     anchor.appendChild(circle);
+    nodeSVG.appendChild(anchor);
 
     new nodeDragHandler(circle);
 
@@ -105,6 +105,11 @@ export class Node {
 }
 
 export function drawLine(source, destination) {
+  if(!source || !destination) {
+    console.error("ERROR: could not find source and or destination node(s)");
+    return 1;
+  }
+
   const sourceCircle = source.circle;
   const destinationCircle = destination.circle;
 
@@ -123,7 +128,7 @@ export function drawLine(source, destination) {
     existingLine.setAttribute("y1", y1.toString());
     existingLine.setAttribute("x2", x2.toString());
     existingLine.setAttribute("y2", y2.toString());
-    existingLine.setAttribute("stroke", "blue");
+    existingLine.setAttribute("stroke", "red");
     existingLine.setAttribute("stroke-width", "2");
   } else {
     const x1 = parseFloat(sourceCircle.getAttribute("cx"));
@@ -138,7 +143,7 @@ export function drawLine(source, destination) {
     line.setAttribute("y1", y1.toString());
     line.setAttribute("x2", x2.toString());
     line.setAttribute("y2", y2.toString());
-    line.setAttribute("stroke", "blue");
+    line.setAttribute("stroke", "red");
     line.setAttribute("stroke-width", "2");
 
     nodeSVG.appendChild(line)
