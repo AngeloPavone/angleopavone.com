@@ -1,5 +1,5 @@
 export const nodeSVG = document.getElementById("nodeSVG");
-const graphContainer = document.getElementById("graphContainer");
+export const graphContainer = document.getElementById("graphContainer");
 const VIEWPORT_MIN = nodeSVG.clientWidth / 2 - graphContainer.clientWidth / 2;
 const VIEWPORT_MAX = nodeSVG.clientWidth / 2 + graphContainer.clientWidth / 2;
 const RADIUS = 30;
@@ -93,6 +93,7 @@ export class Node {
 
     anchor.appendChild(circle);
     nodeSVG.appendChild(anchor);
+    graphContainer.appendChild(nodeSVG);
 
     new nodeDragHandler(circle);
 
@@ -105,7 +106,7 @@ export class Node {
 }
 
 export function drawLine(source, destination) {
-  if(!source || !destination) {
+  if (!source || !destination) {
     console.error("ERROR: could not find source and or destination node(s)");
     return 1;
   }
@@ -146,8 +147,8 @@ export function drawLine(source, destination) {
     line.setAttribute("stroke", "red");
     line.setAttribute("stroke-width", "2");
 
-    nodeSVG.appendChild(line)
+    const firstChild = nodeSVG.firstChild;
+
+    nodeSVG.insertBefore(line, firstChild);
   }
 }
-
-console.log("nodes: %o", nodes);

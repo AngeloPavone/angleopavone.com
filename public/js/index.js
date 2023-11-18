@@ -1,4 +1,4 @@
-import { drawLine, Node, nodes, nodeSVG } from './graph.js';
+import { graphContainer, drawLine, Node, nodes, nodeSVG } from './graph.js';
 
 export function addNode(blogTitle) {
   const node = new Node(blogTitle);
@@ -21,10 +21,10 @@ fetch('/api/blogposts')
 
     drawLine(nodes[0], nodes[1])
 
-    nodes.forEach(node => {
-      nodeSVG.appendChild(node.getCircle());
-    });
+    // nodes.forEach(node => {
+    //   nodeSVG.appendChild(node);
+    // });
   })
   .catch((error) => {
-    console.error('Error fetching blog posts:', error);
+    console.error(error);
   });
